@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>touch grass</title>
   <meta name="description" content="touch grass">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -13,6 +13,10 @@
 
     :root {
       --background: url(assets/grass.png);
+    }
+
+    * {
+      touch-action: manipulation;
     }
 
     body {
@@ -225,6 +229,15 @@
         styleSheet.length
       );
     };
+
+    let lastTap = 0;
+    document.addEventListener("touchend", (e) => {
+      const now = Date.now();
+      if (now - lastTap < 500 && now - lastTap > 0) {
+        e.preventDefault();
+      }
+      lastTap = now;
+    }, { passive: false });
 
     document.body.addEventListener("pointerdown", (e) => {
       e.preventDefault();
